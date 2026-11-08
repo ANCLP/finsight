@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Tests: passing](https://img.shields.io/badge/tests-43%20passed-brightgreen.svg)]()
+[![Tests: passing](https://img.shields.io/badge/tests-51%20passed-brightgreen.svg)]()
 [![Contributing](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 > **Production-grade, open-source financial news sentiment analysis, continuous Bull/Bear polarity indexing, and stock entity attribution engine.**
@@ -34,6 +34,8 @@ fin_sentiment/
 ├── types.py                  # Domain types: SentimentScore, EntitySentiment, ArticleAnalysis
 ├── ingestion/                # Ingestion & preprocessing
 │   ├── phrasebank_loader.py  # Loader for all-data.csv and Sentences_*Agree.txt
+│   ├── dataset_integrator.py # Multi-source normalizer, deduplicator & class balancer
+│   ├── synthetic_stock_generator.py # Modern equity catalyst scenario generator
 │   ├── text_preprocessor.py  # Financial decimal/suffix-aware tokenizer & segmenter
 │   └── article_parser.py     # Multi-format news article & feed parser
 ├── entity/                   # Entity & catalyst intelligence
