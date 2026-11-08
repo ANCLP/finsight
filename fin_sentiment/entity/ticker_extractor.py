@@ -78,8 +78,8 @@ TICKER_STOPWORDS = {
 class TickerExtractor:
     """Extracts stock tickers and entity mentions from financial text."""
 
-    # Regex for cashtags ($AAPL, $RELIANCE)
-    CASHTAG_RE = re.compile(r"\$([A-Za-z0-9\.\_]{1,12})\b")
+    # Regex for cashtags ($AAPL, $TCS, $NVDA, $RELIANCE) - must start with an alphabetic char to avoid dollar amounts ($89.5M)
+    CASHTAG_RE = re.compile(r"\$([A-Za-z][A-Za-z0-9\.\_]{0,11})\b")
 
     # Regex for exchange prefixed tickers (NSE:TCS, NASDAQ:AAPL)
     EXCHANGE_PREFIX_RE = re.compile(r"\b(?:NSE|BSE|NASDAQ|NYSE|LSE|TSX):([A-Za-z0-9\.\_]{1,12})\b", re.IGNORECASE)
@@ -129,13 +129,11 @@ class TickerExtractor:
                 detected.add(ticker)
 
         # 5. Standalone uppercase ticker symbols if financial context is present
-        # Only check standalone uppercase if we found 0 cashtags to avoid noise
-        if not detected:
-            for match in cls.STANDALONE_UPPER_RE.finditer(text):
-                sym = match.group(1)
-                # Check if this uppercase word is a known ticker
-                if sym in COMMON_COMPANY_TICKERS.values() and sym not in TICKER_STOPWORDS:
-                    detected.add(sym)
+        for match in cls.STANDALONE_UPPER_RE.finditer(text):
+            sym = match.group(1)
+            # Check if this uppercase word is a known ticker and not in stopwords
+            if sym in COMMON_COMPANY_TICKERS.values() and sym not in TICKER_STOPWORDS:
+                detected.add(sym)
 
         return sorted(detected)
 

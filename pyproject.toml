@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "fin-sentiment"
+name = "fisight"
 version = "0.1.0"
 description = "Production-grade, open-source financial news sentiment analysis, bull/bear scoring, and stock catalyst extraction engine."
 readme = "README.md"
@@ -49,6 +49,9 @@ torch = [
     "transformers>=4.30.0",
     "accelerate>=0.20.0",
 ]
+onnx = [
+    "onnxruntime>=1.15.0",
+]
 dev = [
     "pytest>=7.4.0",
     "pytest-cov>=4.1.0",
@@ -57,17 +60,17 @@ dev = [
     "mypy>=1.5.0",
 ]
 all = [
-    "fin-sentiment[torch,dev]",
+    "fisight[torch,dev,onnx]",
 ]
 
 [project.urls]
-Homepage = "https://github.com/finsentiment/fin-sentiment"
-Documentation = "https://github.com/finsentiment/fin-sentiment#readme"
-Repository = "https://github.com/finsentiment/fin-sentiment"
-Issues = "https://github.com/finsentiment/fin-sentiment/issues"
+Homepage = "https://github.com/ANCLP/finsight"
+Documentation = "https://github.com/ANCLP/finsight#readme"
+Repository = "https://github.com/ANCLP/finsight"
+Issues = "https://github.com/ANCLP/finsight/issues"
 
 [project.scripts]
-fin-sentiment = "fin_sentiment.cli:main"
+fisight = "fin_sentiment.cli:main"
 finsight = "fin_sentiment.cli:main"
 
 [tool.setuptools.packages.find]

@@ -1,5 +1,5 @@
-# FinSight — AI Financial News Intelligence Platform
-# Production Dockerfile optimized for Google Cloud Run (scale-to-zero, < 160MB)
+# fisight: Production-grade financial news sentiment analysis engine
+# Lightweight container (<150MB) for CLI and batch inference on CPU
 
 FROM python:3.11-slim AS builder
 
@@ -9,8 +9,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements-server.txt .
-RUN pip install --no-cache-dir --user -r requirements-server.txt
+COPY requirements.txt pyproject.toml README.md ./
+RUN pip install --no-cache-dir --user -r requirements.txt
 
 # Final minimal runtime image
 FROM python:3.11-slim
@@ -23,14 +23,15 @@ ENV PATH=/root/.local/bin:$PATH
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
 
-# Copy application code, pre-trained baseline model, and static webapp
+# Copy application source code and reference datasets
 COPY fin_sentiment/ /app/fin_sentiment/
-COPY finsight/ /app/finsight/
-COPY checkpoints/ /app/checkpoints/
-COPY webapp/ /app/webapp/
+COPY pyproject.toml README.md all-data.csv* /app/
+COPY data/ /app/data/
+COPY FinancialPhraseBank/ /app/FinancialPhraseBank/
 
-# Default GCP Cloud Run port
-EXPOSE 8080
+# Install library CLI in container
+RUN pip install --no-deps -e /app
 
-# Execute serverless FastAPI app with dynamic port binding
-CMD ["sh", "-c", "uvicorn fin_sentiment.web.api:app --host 0.0.0.0 --port ${PORT:-8080} --workers 1"]
+# Default to CLI entrypoint
+ENTRYPOINT ["fisight"]
+CMD ["--help"]

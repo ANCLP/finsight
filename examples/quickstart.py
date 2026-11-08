@@ -1,4 +1,4 @@
-"""Quickstart example demonstrating fin-sentiment capabilities."""
+"""Quickstart example demonstrating fisight capabilities."""
 
 from __future__ import annotations
 

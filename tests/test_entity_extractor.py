@@ -49,3 +49,19 @@ def test_detect_bearish_catalysts():
 
     boost = CatalystExtractor.compute_catalyst_boost(catalysts)
     assert boost < 0.0
+
+
+def test_extract_tickers_mixed_cashtag_and_standalone():
+    text = "$TCS reported record gains while INFY and MSFT dropped."
+    tickers = TickerExtractor.extract_tickers(text)
+    assert "TCS" in tickers
+    assert "INFY" in tickers
+    assert "MSFT" in tickers
+
+
+def test_extract_tickers_ignores_monetary_dollar_amounts():
+    text = "Apple ($AAPL) posted revenue of $89.5 billion and declared a dividend of $0.24 per share."
+    tickers = TickerExtractor.extract_tickers(text)
+    assert tickers == ["AAPL"]
+    assert "89.5" not in tickers
+    assert "0.24" not in tickers
