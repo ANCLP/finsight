@@ -1,4 +1,4 @@
-# FinSight: Production-grade financial news sentiment analysis engine
+# fisight: Production-grade financial news sentiment analysis engine
 # Lightweight container (<150MB) for CLI and batch inference on CPU
 
 FROM python:3.11-slim AS builder
@@ -33,5 +33,5 @@ COPY FinancialPhraseBank/ /app/FinancialPhraseBank/
 RUN pip install --no-deps -e /app
 
 # Default to CLI entrypoint
-ENTRYPOINT ["FinSight"]
+ENTRYPOINT ["fisight"]
 CMD ["--help"]

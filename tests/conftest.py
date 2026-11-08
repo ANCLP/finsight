@@ -1,4 +1,4 @@
-"""Test fixtures and shared helpers for fin-sentiment."""
+"""Test fixtures and shared helpers for fisight."""
 
 from __future__ import annotations
 
