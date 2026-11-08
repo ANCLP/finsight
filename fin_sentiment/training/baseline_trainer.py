@@ -21,9 +21,11 @@ class BaselineTrainer:
         self,
         c_param: float = 2.5,
         ngram_range: tuple = (1, 3),
+        max_features: Optional[int] = 25000,
     ):
         self.c_param = c_param
         self.ngram_range = ngram_range
+        self.max_features = max_features
         self.model: Optional[BaselineSentimentModel] = None
 
     def train(
@@ -32,9 +34,18 @@ class BaselineTrainer:
         test_size: float = 0.15,
         val_size: float = 0.15,
         save_path: Optional[Union[str, Path]] = None,
+        rebalance_train_classes: bool = False,
         random_state: int = 42,
     ) -> Dict[str, Any]:
         """Runs the complete training and evaluation pipeline on provided DatasetItems.
+
+        Args:
+            items: List of DatasetItem objects.
+            test_size: Proportion of dataset for test split.
+            val_size: Proportion of dataset for validation split.
+            save_path: Optional path to save serialized model pipeline.
+            rebalance_train_classes: If True, balances classes in training split to prevent neutral bias.
+            random_state: Seed for reproducible stratified splitting and training.
 
         Returns:
             Dictionary with training summary, validation metrics, and test metrics.
@@ -47,6 +58,13 @@ class BaselineTrainer:
             random_state=random_state,
         )
 
+        # Optionally rebalance only the training split (preserving pure holdout test sets)
+        if rebalance_train_classes:
+            from fin_sentiment.ingestion.dataset_integrator import DatasetIntegrator
+            train_items = DatasetIntegrator.rebalance_classes(
+                train_items, strategy="balanced", random_state=random_state
+            )
+
         train_texts = [i.text for i in train_items]
         train_labels = [i.sentiment.value for i in train_items]
 
@@ -54,6 +72,7 @@ class BaselineTrainer:
         self.model = BaselineSentimentModel(
             c_param=self.c_param,
             ngram_range=self.ngram_range,
+            max_features=self.max_features,
         )
         self.model.fit(train_texts, train_labels)
 

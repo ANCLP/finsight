@@ -37,9 +37,11 @@ class BaselineSentimentModel(BaseSentimentModel):
         model_path: Optional[Union[str, Path]] = None,
         c_param: float = 2.5,
         ngram_range: tuple = (1, 3),
+        max_features: Optional[int] = 25000,
     ):
         self.c_param = c_param
         self.ngram_range = ngram_range
+        self.max_features = max_features
         self.pipeline: Optional[Pipeline] = None
         self._classes: List[str] = CLASSES
 
@@ -75,6 +77,7 @@ class BaselineSentimentModel(BaseSentimentModel):
 
         vectorizer = TfidfVectorizer(
             ngram_range=self.ngram_range,
+            max_features=self.max_features,
             sublinear_tf=True,
             min_df=effective_min_df,
             max_df=0.95,
