@@ -1,9 +1,10 @@
-# 📈 fin-sentiment
+# 📈 FinSight
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Tests: passing](https://img.shields.io/badge/tests-25%20passed-brightgreen.svg)]()
+[![Tests: passing](https://img.shields.io/badge/tests-43%20passed-brightgreen.svg)]()
+[![Contributing](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 > **Production-grade, open-source financial news sentiment analysis, continuous Bull/Bear polarity indexing, and stock entity attribution engine.**
 
@@ -216,6 +217,16 @@ All 25 unit tests verify:
 - Baseline model fitting, inference, and serialization.
 - Financial metrics computation.
 - End-to-end article sentiment analysis.
+
+---
+
+## 🤝 Contributing & Engineering Roadmap
+
+We actively welcome open-source contributions from quantitative researchers, NLP engineers, and algorithmic traders!
+
+- Read our **[Contribution Guidelines](CONTRIBUTING.md)** for developer setup, testing protocols, and PR workflows.
+- Explore our **[Architectural Audit & Roadmap (GAPS_AND_ROADMAP.md)](GAPS_AND_ROADMAP.md)** for in-depth documentation of known linguistic edge cases, multi-entity attribution gaps, and open engineering tickets.
+- Check our active **[GitHub Issues](https://github.com/ANCLP/finsight/issues)** to pick up a task!
 
 ---
 
