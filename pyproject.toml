@@ -1,0 +1,89 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fin-sentiment"
+version = "0.1.0"
+description = "Production-grade, open-source financial news sentiment analysis, bull/bear scoring, and stock catalyst extraction engine."
+readme = "README.md"
+authors = [
+    { name = "FinSentiment Open Source Contributors", email = "oss@finsentiment.ai" }
+]
+license = { text = "Apache-2.0" }
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Science/Research",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+]
+keywords = [
+    "finance",
+    "sentiment-analysis",
+    "financial-news",
+    "bull-bear-index",
+    "nlp",
+    "algorithmic-trading",
+    "finbert",
+    "stock-market"
+]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "scikit-learn>=1.3.0",
+    "joblib>=1.3.0",
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+torch = [
+    "torch>=2.0.0",
+    "transformers>=4.30.0",
+    "accelerate>=0.20.0",
+]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+]
+all = [
+    "fin-sentiment[torch,dev]",
+]
+
+[project.urls]
+Homepage = "https://github.com/finsentiment/fin-sentiment"
+Documentation = "https://github.com/finsentiment/fin-sentiment#readme"
+Repository = "https://github.com/finsentiment/fin-sentiment"
+Issues = "https://github.com/finsentiment/fin-sentiment/issues"
+
+[project.scripts]
+fin-sentiment = "fin_sentiment.cli:main"
+finsight = "fin_sentiment.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["fin_sentiment*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --strict-markers"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
